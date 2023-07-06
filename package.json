@@ -1,0 +1,27 @@
+{
+    "name": "portfolio",
+    "description": "about me",
+    "author": "Dgebia",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "keywords": [
+        "js",
+        "css",
+        "html",
+        "vite"
+    ],
+    "devDependencies": {
+        "typescript": "^5.0.2",
+        "vite": "^4.3.2"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.4.0",
+        "normalize.css": "^8.0.1"
+    }
+}
