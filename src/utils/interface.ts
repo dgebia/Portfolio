@@ -20,7 +20,7 @@ export interface Skils {
     lang: string,
     logo: string,
     alt: string,
-    rate: number,
+    rate?: number,
 };
 
 export interface Data {
@@ -28,15 +28,15 @@ export interface Data {
     done?: string[],
     not?: string[],
     about?: About[],
-    stack?: Stack,
+    stack?: Skils[],
 };
 
-export interface Stack {
-    language: string,
-    builder: string,
-    markup: string,
-    style: string,
-}
+// export interface Stack {
+//     language: string,
+//     builder: string,
+//     markup: string,
+//     style: string,
+// }
 
 export interface PersonalDetails {
     network: string,

@@ -35,4 +35,8 @@ export class Burger {
     getBurgElement() {
         return document.querySelector(`.${this.classes[1]}`);
     }
+
+    getBurgerConteinerElement() {
+        return document.querySelector(`.${this.classes[0]}`);
+    }
 }

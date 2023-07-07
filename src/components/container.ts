@@ -20,7 +20,6 @@ export class Container {
 
         const footer = document.createElement('div');
         footer.classList.add('footer');
-        footer.innerHTML = "footer"
 
         this.container?.appendChild(navbar);
         this.container?.appendChild(burger);

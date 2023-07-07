@@ -1,6 +1,6 @@
 import { Data } from "../utils/interface";
 
-export class Header {
+export class Footer {
     private container: HTMLElement | null;
     private classes: string[];
 

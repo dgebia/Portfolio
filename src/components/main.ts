@@ -100,18 +100,18 @@ export class Main {
                         div.appendChild(lang)
                         for (let i = 1; i <= 5; i++) {
                             const rate = document.createElement("i");
-                            if (i <= skil.rate && datas.done) {
-                                rate.classList.add(datas.done[0])
-                                rate.classList.add(datas.done[1])
+                            if (skil.rate) {
+                                if (i <= skil.rate && datas.done) {
+                                    rate.classList.add(datas.done[0])
+                                    rate.classList.add(datas.done[1])
+                                }
+                                if (i > skil.rate && datas.not) {
+                                    rate.classList.add(datas.not[0])
+                                    rate.classList.add(datas.not[1])
+                                }
+                                div.appendChild(rate)
                             }
-                            if (i > skil.rate && datas.not) {
-                                rate.classList.add(datas.not[0])
-                                rate.classList.add(datas.not[1])
-                            }
-
-                            div.appendChild(rate)
                         }
-
                         block.appendChild(div)
                     })
                 }

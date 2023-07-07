@@ -53,6 +53,7 @@ export const burgerEvent = (burger: Burger, container: Container, navbar: Navbar
     burger.getBurgElement()?.addEventListener('click', () => {
         if (!burger.getBurgElement()?.classList.contains('active')) {
             burger.getBurgElement()?.classList.add('active');
+            burger.getBurgerConteinerElement()?.classList.add('active')
             container.getConteinerElement()?.classList.add('active');
             navbar.getNavbarElement()?.classList.add("active");
             navbar.clear();
@@ -60,6 +61,7 @@ export const burgerEvent = (burger: Burger, container: Container, navbar: Navbar
             handleNavbarElem(navbar?.getAnchorTags("#text"), SelectedElem);
         } else {
             burger.getBurgElement()?.classList.remove('active');
+            burger.getBurgerConteinerElement()?.classList.remove('active')
             container.getConteinerElement()?.classList.remove('active');
             navbar.getNavbarElement()?.classList.remove("active");
             navbar.clear();

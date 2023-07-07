@@ -4,6 +4,7 @@ import { Data, Links } from "./interface";
 export const navbarClasses = ["navbar", "icon", "text"];
 export const navbarIds = ["text", "icon"];
 export const headerClasses = ["header-contant"];
+export const footerClasses = ["footer-container"];
 export const burgerClasses = ["burger-container", "burg"];
 
 
@@ -11,14 +12,15 @@ export const burgerClasses = ["burger-container", "burg"];
 
 
 export const stack: Data = {
-    topic: "Employment",
-    stack: {
-        language: "typeScript",
-        builder: "Vite",
-        markup: "HTML",
-        style: "CSS",
-    },
-    about: []
+    topic: "Stack",
+    stack: [
+        { lang: "TypeScript", logo: "/images/typescript.svg", alt: "typescript" },
+        { lang: "HTML", logo: "/images/html.svg", alt: "HTML" },
+        { lang: "Cascading Style Sheets", logo: "/images/css.svg", alt: "css" },
+        { lang: "VITE", logo: "/images/vitejs.svg", alt: "VITE" },
+        { lang: "GIT", logo: "/images/git.svg", alt: "GIT" },
+        { lang: "GitHub ", logo: "/images/github.svg", alt: "GitHub" },
+    ],
 }
 
 export const links: Links[] = [
@@ -191,56 +193,56 @@ export const Experience: Data = {
         {
             title: "Programming languages and frameworks",
             skils: [
-                { lang: "JavaScript", logo: "/images/javascript.svg", alt: "material-ui", rate: 4 },
-                { lang: "React", logo: "/images/reactjs.svg", alt: "material-ui", rate: 4 },
-                { lang: "Next", logo: "/images/nextjs.svg", alt: "material-ui", rate: 2 },
+                { lang: "JavaScript", logo: "/images/javascript.svg", alt: "javascript", rate: 4 },
+                { lang: "React", logo: "/images/reactjs.svg", alt: "reactjs", rate: 4 },
+                { lang: "Next", logo: "/images/nextjs.svg", alt: "nextjs", rate: 2 },
                 { lang: "React Redux", logo: "/images/redux.svg", alt: "material-ui", rate: 4 },
-                { lang: "TypeScript", logo: "/images/typescript.svg", alt: "material-ui", rate: 3 },
-                { lang: "Node", logo: "/images/nodejs.svg", alt: "material-ui", rate: 2 },
-                { lang: "Express", logo: "/images/expressjs.svg", alt: "material-ui", rate: 3 },
-                { lang: "Nest", logo: "/images/nestjs.svg", alt: "material-ui", rate: 2 },
+                { lang: "TypeScript", logo: "/images/typescript.svg", alt: "typescript", rate: 3 },
+                { lang: "Node", logo: "/images/nodejs.svg", alt: "nodejs", rate: 2 },
+                { lang: "Express", logo: "/images/expressjs.svg", alt: "expressjs", rate: 3 },
+                { lang: "Nest", logo: "/images/nestjs.svg", alt: "nestjs", rate: 2 },
             ],
         },
         {
             title: "Database",
             skils: [
-                { lang: "mongoDB", logo: "/images/mongodb.svg", alt: "material-ui", rate: 3 },
-                { lang: "Mongoose ODM ", logo: "/images/mongoose.svg", alt: "material-ui", rate: 4 },
+                { lang: "mongoDB", logo: "/images/mongodb.svg", alt: "mongodb", rate: 3 },
+                { lang: "Mongoose ODM ", logo: "/images/mongoose.svg", alt: "mongoose", rate: 4 },
             ],
         },
         {
             title: "Communications",
             skils: [
-                { lang: "Rest API ", logo: "/images/restAPI.png", alt: "material-ui", rate: 4 },
+                { lang: "Rest API ", logo: "/images/restAPI.png", alt: "restAPI", rate: 4 },
             ],
         },
         {
             title: "Authentication",
             skils: [
-                { lang: "JSON Web Token (JWT)", logo: "/images/jwt.svg", alt: "material-ui", rate: 3 },
+                { lang: "JSON Web Token (JWT)", logo: "/images/jwt.svg", alt: "jwt", rate: 3 },
             ],
         },
         {
             title: "Version control",
             skils: [
-                { lang: "GIT ", logo: "/images/git.svg", alt: "material-ui", rate: 3 },
-                { lang: "GitHub ", logo: "/images/github.svg", alt: "material-ui", rate: 3 },
+                { lang: "GIT", logo: "/images/git.svg", alt: "GIT", rate: 3 },
+                { lang: "GitHub ", logo: "/images/github.svg", alt: "GitHub", rate: 3 },
             ],
         },
         {
             title: "Styling",
             skils: [
-                { lang: "Cascading Style Sheets", logo: "/images/css.svg", alt: "material-ui", rate: 4 },
-                { lang: "SCSS", logo: "/images/sass.svg", alt: "material-ui", rate: 4 },
-                { lang: "Styled Component", logo: "/images/sc.png", alt: "material-ui", rate: 3 },
-                { lang: "Material UI", logo: "/images/muaterialui.svg", alt: "material-ui", rate: 3 },
-                { lang: "Bootstrap", logo: "/images/bootstrap.svg", alt: "material-ui", rate: 3 },
+                { lang: "Cascading Style Sheets", logo: "/images/css.svg", alt: "css", rate: 4 },
+                { lang: "SCSS", logo: "/images/sass.svg", alt: "sass", rate: 4 },
+                { lang: "Styled Component", logo: "/images/sc.png", alt: "sc", rate: 3 },
+                { lang: "Material UI", logo: "/images/muaterialui.svg", alt: "muaterialui", rate: 3 },
+                { lang: "Bootstrap", logo: "/images/bootstrap.svg", alt: "bootstrap", rate: 3 },
             ],
         },
         {
             title: "Markup Language",
             skils: [
-                { lang: "HTML", logo: "/images/html.svg", alt: "material-ui", rate: 4 },
+                { lang: "HTML", logo: "/images/html.svg", alt: "HTML", rate: 4 },
             ],
         },
     ]
@@ -289,7 +291,7 @@ export const PersonalDetails: Data = {
                 { text: "address", network: "Georgia, Tbilisi 0144", logo: "/images/direction.png", alt: "address", selector: 'h5' },
                 { text: "linkedin", network: "https://www.linkedin.com/in/irakli-kakulia-b0843a95/", logo: "/images/linkedin.svg", alt: "linkedin", selector: 'a' },
                 { text: "github", network: "https://github.com/dgebia", logo: "/images/github.svg", alt: "material-ui", selector: 'a' },
-                { text: "instagram", network: "https://www.instagram.com/kakulia.irakly/", logo: "/images/html.svg", alt: "instagram", selector: 'a' },
+                { text: "instagram", network: "https://www.instagram.com/kakulia.irakly/", logo: "/images/Instagram.svg", alt: "instagram", selector: 'a' },
             ]
 
         }
