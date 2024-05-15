@@ -1,144 +1,95 @@
-import { Data } from "../utils/data";
+import { Data } from '../utils/data';
 
 export class Main {
-    private container: HTMLElement | null;
-    private classes: string[];
+  private container: HTMLElement | null;
+  private classes: string[];
 
-    constructor(
-        containerSelector: string,
-        classes: string[],
-    ) {
-        this.container = document.querySelector(containerSelector);
-        this.classes = classes;
+  constructor(containerSelector: string, classes: string[]) {
+    this.container = document.querySelector(containerSelector);
+    if (!this.container) {
+      throw new Error('Container not found in class Main.');
     }
+    this.classes = classes;
+  }
 
-    clear(): void {
+  clear(): void {
+    while (this.container?.firstChild) {
+      this.container.removeChild(this.container.firstChild);
+    }
+  }
 
-        if (this.container?.firstChild) {
-            const body = document.querySelector('.body');
-            if (body) {
-                this.container.removeChild(body);
+  private createElement(tag: string, className?: string, content?: string, id?: string): HTMLElement {
+    const element = document.createElement(tag);
+    if (className) element.classList.add(className);
+    if (content) element.textContent = content;
+    if (id) element.id = id;
+    return element;
+  }
+
+  private createImageElement(src: string, alt: string, className?: string): HTMLImageElement {
+    const img = document.createElement('img') as HTMLImageElement;
+    img.src = src;
+    img.alt = alt;
+    if (className) img.classList.add(className);
+    return img;
+  }
+
+  private appendElement(parent: HTMLElement, child: HTMLElement | undefined): void {
+    if (child) parent.appendChild(child);
+  }
+
+  render(datas: Data): void {
+    const body = this.createElement('div', this.classes[0]);
+    const content = this.createElement('div');
+    this.appendElement(body, this.createElement('h1', undefined, datas.topic ?? ""));
+
+    datas.about?.forEach(data => {
+      const block = this.createElement('div');
+      data.title && this.appendElement(block, this.createElement('h3', undefined, data.title));
+      data.qualities && this.appendElement(block, this.createElement('h5', undefined, data.qualities));
+      data.company && this.appendElement(block, this.createElement('h2', undefined, data.company));
+      data.description && this.appendElement(block, this.createElement('h5', undefined, data.description));
+      (data.startDate && data.finishDate) && this.appendElement(block, this.createElement('p', undefined, `${data.startDate}  ${data.finishDate}`));
+      data.languages && this.appendElement(block, this.createElement('h5', undefined, data.languages));
+
+      data.personal_details?.forEach(item => {
+        const div = this.createElement('div');
+        const img = this.createImageElement(item.logo, item.alt, 'img');
+        if (item.selector === 'a' || item.selector === 'h5') {
+          const network = this.createElement(item.selector) as HTMLAnchorElement | HTMLHeadingElement;
+          network.textContent = item.text ?? "";
+          network.id = item.text ?? "";
+          if (item.selector === 'a' && network instanceof HTMLAnchorElement) {
+            network.href = item.network ?? "";
+          }
+          div.appendChild(img);
+          div.appendChild(network);
+        }
+        block.appendChild(div);
+      });
+
+      if (data.skils) {
+        data.skils.forEach(skil => {
+          const skillDiv = this.createElement('div');
+          const skillImg = this.createImageElement(skil.logo, skil.alt, 'img');
+          const lang = this.createElement('p', undefined, skil.lang, 'skil');
+          skillDiv.appendChild(skillImg);
+          skillDiv.appendChild(lang);
+
+          if (skil.rate !== undefined && datas.done && datas.not) {
+            for (let i = 1; i <= 5; i++) {
+              const rate = this.createElement('i');
+              rate.classList.add(...(i <= skil.rate ? datas.done ?? [] : datas.not ?? []));
+              skillDiv.appendChild(rate);
             }
-        }
-    }
+          }
+          block.appendChild(skillDiv);
+        });
+      }
+      content.appendChild(block);
+    });
 
-    render(datas: Data): void {
-        const body = document.createElement("div");
-        const content = document.createElement("div");
-
-        const h1 = document.createElement("h1");
-        h1.textContent = datas.topic
-        body.classList.add(this.classes[0])
-        body.appendChild(h1);
-        if (datas.about) {
-            datas.about.forEach((data) => {
-                const block = document.createElement("div");
-                const title = document.createElement("h3");
-                const company = document.createElement("h2");
-                const h5 = document.createElement("h5");
-                const date = document.createElement("p");
-
-                if (data.title) {
-                    title.textContent = data.title;
-                    block.appendChild(title)
-                }
-
-                if (data.qualities) {
-                    h5.textContent = data.qualities;
-                    block.appendChild(h5)
-                }
-
-                if (data.personal_details) {
-                    data.personal_details.forEach(item => {
-                        const div = document.createElement("div");
-                        const img = document.createElement("img");
-                        let network;
-
-                        if (item.selector === "a") {
-                            network = document.createElement(item.selector);
-                            network.id = item.text;
-                            network.textContent = item.text;
-                            network.href = item.network;
-                            img.src = item.logo;
-                            img.alt = item.alt;
-                            img.setAttribute('crs', "image-crs");
-                            div.appendChild(img);
-                            div.appendChild(network);
-                            block.appendChild(div);
-                        }
-                        if (item.selector === "h5") {
-                            network = document.createElement(item.selector);
-                            network.id = item.text;
-                            network.textContent = `${item.network}`;
-                            img.src = item.logo;
-                            img.alt = item.alt;
-                            img.setAttribute('crs', "image-crs");
-                            div.appendChild(img);
-                            div.appendChild(network);
-                            block.appendChild(div);
-                        }
-                    })
-                }
-
-                if (data.languages) {
-                    h5.textContent = data.languages;
-                    block.appendChild(h5)
-                }
-
-                if (data.skils) {
-                    data.skils.forEach(skil => {
-                        const div = document.createElement("div");
-                        const lang = document.createElement("p");
-                        const img = document.createElement("img");
-                        img.src = skil.logo
-                        img.alt = skil.alt
-                        img.classList.add('.img')
-                        img.setAttribute('crs', "image-crs");
-                        lang.id = "skil"
-                        lang.textContent = skil.lang
-                        div.appendChild(img)
-                        div.appendChild(lang)
-                        for (let i = 1; i <= 5; i++) {
-                            const rate = document.createElement("i");
-                            if (skil.rate) {
-                                if (i <= skil.rate && datas.done) {
-                                    rate.classList.add(datas.done[0])
-                                    rate.classList.add(datas.done[1])
-                                }
-                                if (i > skil.rate && datas.not) {
-                                    rate.classList.add(datas.not[0])
-                                    rate.classList.add(datas.not[1])
-                                }
-                                div.appendChild(rate)
-                            }
-                        }
-                        block.appendChild(div)
-                    })
-                }
-
-                if (data.company) {
-                    company.textContent = data.company;
-                }
-                if (data.descripion) {
-                    h5.textContent = data.descripion
-                    block.appendChild(h5)
-                }
-
-                if (data?.startDate && data?.finishDate) {
-                    date.textContent = `${data?.startDate} - ${data?.finishDate}`
-                    block.appendChild(date)
-                }
-
-
-                if (data.company) {
-                    block.appendChild(company)
-                }
-
-                content.appendChild(block)
-                body.appendChild(content)
-            });
-        }
-
-        this.container?.appendChild(body)
-    }
+    body.appendChild(content);
+    this.container?.appendChild(body);
+  }
 }

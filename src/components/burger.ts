@@ -1,42 +1,51 @@
 export class Burger {
-    static render() {
-        throw new Error("Method not implemented.");
+  private container: HTMLElement | null;
+  private burger: HTMLElement | null = null;
+  private classes: string[];
+  private onToggle?: ((isActive: boolean) => void) | null = null;
+
+  constructor(containerSelector: string, classes: string[], onToggle?: (isActive: boolean) => void) {
+    this.container = document.querySelector(containerSelector);
+    this.classes = classes
+    if (!this.container) {
+      throw new Error('Container not found in class Burger.');
     }
-    private container: HTMLElement | null;
-    private classes: string[];
+    this.onToggle = onToggle;
+    this.initBurger(classes);
+  }
 
-
-    constructor(containerSelector: string, classes: string[]) {
-        this.container = document.querySelector(containerSelector);
-        this.classes = classes;
+  private initBurger(classes: string[]): void {
+    this.burger = document.createElement('div');
+    this.burger.classList.add(...classes);
+    for (let i = 0; i < 3; i++) {
+      const span = document.createElement('span');
+      this.burger.appendChild(span);
     }
+    this.burger.addEventListener('click', () => this.toggle());
+    this.container?.appendChild(this.burger);
+  }
 
-    render(): void {
-        const burger_container = document.createElement("div");
-        const burger = document.createElement("div");
-
-
-        for (let i = 0; i < 3; i++) {
-            const span = document.createElement('span');
-            burger.appendChild(span);
-        }
-
-        burger_container.classList.add(this.classes[0])
-        burger.classList.add(this.classes[1])
-        burger_container.appendChild(burger);
-
-        this.container?.appendChild(burger_container);
+  toggle(): void {
+    if (!this.burger) {
+      throw new Error('Burger element not found.');
     }
-
-    getBurgerElement() {
-        return this.container
+    const isActive = !this.burger.classList.contains('active');
+    this.burger.classList.toggle('active');
+    if (this.onToggle) {
+      this.onToggle(isActive);
     }
+  }
 
-    getBurgElement() {
-        return document.querySelector(`.${this.classes[1]}`);
-    }
 
-    getBurgerConteinerElement() {
-        return document.querySelector(`.${this.classes[0]}`);
-    }
+  getContainerElement() {
+    return this.container;
+  }
+
+  getBurgElement() {
+    return document.querySelector(`.${this.classes[1]}`);
+  }
+
+  getBurgerConteinerElement() {
+    return document.querySelector(`.${this.classes[0]}`);
+  }
 }

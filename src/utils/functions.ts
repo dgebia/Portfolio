@@ -1,73 +1,59 @@
-import { Burger } from "../components/burger";
-import { Container } from "../components/container";
-import { Navbar } from "../components/navbar";
-import { main } from "../main";
-import { Data, Certificates, Education, Employment, MainQualities, Experience, Languages, PersonalDetails, notInfo } from "./data";
-import { CallbackArgs } from "./interface";
+import { main } from '../main';
+import {
+  Data,
+  Certificates,
+  Education,
+  Employment,
+  MainQualities,
+  Experience,
+  Languages,
+  PersonalDetails,
+  notInfo,
+} from './data';
+import { CallbackArgs } from './interface';
 
-export const SelectedElem = ({ event, arrOfElems }: CallbackArgs): HTMLElement => {
-    event?.preventDefault();
-    const selectedElem = event?.target as HTMLElement;
-    removeActivClassInGroopTags(arrOfElems)
-    selectedElem.classList.add('active')
-    handleSelectedElem(selectedElem)
-    main.clear();
-    main.render(handleSelectedElem(selectedElem) as Data)
-    return selectedElem
+const categoryMap = new Map<string, { data: Data, classes: string[] }>([
+  ['Education', { data: Education, classes: ['fa-graduation-cap'] }],
+  ['Employment', { data: Employment, classes: ['fa-briefcase'] }],
+  ['Certificates', { data: Certificates, classes: ['fa-certificate'] }],
+  ['Experience', { data: Experience, classes: ['fa-ranking-star'] }],
+  ['Main qualities', { data: MainQualities, classes: ['fa-person-rays'] }],
+  ['Languages', { data: Languages, classes: ['fa-language'] }],
+  ['Personal details', { data: PersonalDetails, classes: ['fa-circle-info'] }],
+]);
+
+export function getCategoryDataFromElement(selectedElement: HTMLElement) {
+  for (let [key, info] of categoryMap.entries()) {
+    if (selectedElement.textContent === key || info.classes.some(cls => selectedElement.classList.contains(cls))) {
+      return info.data;
+    }
+  }
+  return notInfo;
+}
+
+export const updateUIOnMenuSelection = ({ event, arrayOfElements }: { event: MouseEvent | undefined, arrayOfElements: NodeListOf<HTMLElement> }): HTMLElement | undefined => {
+  if (!event) return;
+  event.preventDefault();
+  const selectedElement = event.target as HTMLElement;
+  removeActiveClassFromGroup(arrayOfElements);
+  selectedElement.classList.add('active');
+  const data = getCategoryDataFromElement(selectedElement);
+  main.clear();
+  main.render(data as Data);
+  return selectedElement;
 };
 
-export function handleSelectedElem(selectedElem: HTMLElement) {
-    switch (true) {
-        case selectedElem.textContent === "Education" || selectedElem.classList.contains('fa-graduation-cap'):
-            return Education;
-        case selectedElem.textContent === "Employment" || selectedElem.classList.contains('fa-briefcase'):
-            return Employment;
-        case selectedElem.textContent === "Certificates" || selectedElem.classList.contains('fa-certificate'):
-            return Certificates;
-        case selectedElem.textContent === "Experience" || selectedElem.classList.contains('fa-ranking-star'):
-            return Experience;
-        case selectedElem.textContent === "Main qualities" || selectedElem.classList.contains('fa-person-rays'):
-            return MainQualities;;
-        case selectedElem.textContent === "Languages" || selectedElem.classList.contains('fa-language'):
-            return Languages;
-        case selectedElem.textContent === "Personal details" || selectedElem.classList.contains('fa-circle-info'):
-            return PersonalDetails;
-        default:
-            return notInfo;
-    }
-}
+const removeActiveClassFromGroup = (elements: NodeListOf<HTMLElement>): void => {
+  elements.forEach(element => element.classList.remove('active'));
+};
 
-const removeActivClassInGroopTags = (Elements: NodeListOf<Element>): void => {
-    Elements.forEach(elm => elm.classList.remove('active'))
-}
-
-export const handleNavbarElem = (arrOfElems: NodeListOf<Element>, callback: (args: CallbackArgs) => void) => {
-    arrOfElems?.forEach(elem => {
-
-        elem.addEventListener('click', (event: Event) => { callback({ event, arrOfElems }) })
-    })
-}
-
-
-export const burgerEvent = (burger: Burger, container: Container, navbar: Navbar) => {
-    burger.getBurgElement()?.addEventListener('click', () => {
-        if (!burger.getBurgElement()?.classList.contains('active')) {
-            burger.getBurgElement()?.classList.add('active');
-            burger.getBurgerConteinerElement()?.classList.add('active')
-            container.getConteinerElement()?.classList.add('active');
-            navbar.getNavbarElement()?.classList.add("active");
-            navbar.clear();
-            navbar.setText();
-            handleNavbarElem(navbar?.getAnchorTags("#text"), SelectedElem);
-        } else {
-            burger.getBurgElement()?.classList.remove('active');
-            burger.getBurgerConteinerElement()?.classList.remove('active')
-            container.getConteinerElement()?.classList.remove('active');
-            navbar.getNavbarElement()?.classList.remove("active");
-            navbar.clear();
-            navbar.setIcon();
-            handleNavbarElem(navbar?.getAnchorTags("#icon"), SelectedElem);
-        }
-    })
-
-}
+export const handleNavbarElem = (
+  arrayOfElements: NodeListOf<HTMLElement>,
+  callback: (args: CallbackArgs) => void,
+) => {
+  arrayOfElements.forEach(elem => {
+    elem.addEventListener('click', (event: MouseEvent) => {
+      callback({ event, arrayOfElements });
+    });
+  });
+};

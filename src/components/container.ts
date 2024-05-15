@@ -1,38 +1,47 @@
 export class Container {
-    private container: HTMLElement | null;
+  private container: HTMLElement | null;
+  private navbar: HTMLElement;
+  private burger: HTMLElement;
+  private header: HTMLElement;
+  private main: HTMLElement;
+  private footer: HTMLElement;
 
-    constructor(containerSelector: string,) {
-        this.container = document.querySelector(containerSelector);
+  constructor(containerSelector: string) {
+    this.container = document.querySelector(containerSelector);
+    if (!this.container) {
+      throw new Error('Container not found in class Container.');
     }
 
-    render() {
-        const navbar = document.createElement('div');
-        navbar.classList.add('navbar');
+    this.navbar = this.createDiv('navbar');
+    this.burger = this.createDiv('burger');
+    this.header = this.createDiv('header');
+    this.main = this.createDiv('main');
+    this.footer = this.createDiv('footer');
+  }
 
-        const burger = document.createElement('div');
-        burger.classList.add('burger');
+  private createDiv(className: string): HTMLElement {
+    const div = document.createElement('div');
+    div.classList.add(className);
+    return div
+  }
 
-        const header = document.createElement('div');
-        header.classList.add('header');
+  render() {
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(this.navbar)
+    fragment.appendChild(this.burger)
+    fragment.appendChild(this.header)
+    fragment.appendChild(this.main)
+    fragment.appendChild(this.footer)
 
-        const main = document.createElement('div');
-        main.classList.add('main');
 
-        const footer = document.createElement('div');
-        footer.classList.add('footer');
+    this.container?.appendChild(fragment);
+  }
 
-        this.container?.appendChild(navbar);
-        this.container?.appendChild(burger);
-        this.container?.appendChild(header);
-        this.container?.appendChild(main);
-        this.container?.appendChild(footer);
-    }
+  getContainerElement() {
+    return this.container;
+  }
 
-    getConteinerElement() {
-        return this.container
-    }
-
-    getBurgElement() {
-
-    }
-} 
+  getBurgElement() {
+    return this.burger;
+  }
+}
